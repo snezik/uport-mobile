@@ -7,7 +7,7 @@ import { Navigation } from 'react-native-navigation'
  * Use existing Avatar until its rewritten
  */
 import Avatar from 'uPortMobile/lib/components/shared/Avatar'
-import { capitalizeFirstLetter } from 'uPortMobile/lib/utilities/string'
+import { capitalizeAllLetter } from 'uPortMobile/lib/utilities/string'
 import { Theme } from '../../themes/default'
 
 interface CredentialProps {
@@ -22,18 +22,17 @@ interface CredentialProps {
 }
 
 const Credential: React.FC<CredentialProps> = props => {
-  // console.tron.log(props)
 
   const baseStyle = {
     margin: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'white',
     borderRadius: 5,
   }
 
   const shadow = {
     shadowColor: '#000000',
     shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowRadius: 25,
   }
 
   const border = {
@@ -55,7 +54,7 @@ const Credential: React.FC<CredentialProps> = props => {
     ...(props.spec && props.spec.essential ? requiredBorder : {}),
     ...(props.noMargin ? { margin: 0 } : {}),
   }
-
+  console.log('CREDENTIAL',props);
   return (
     <TouchableOpacity
       style={style}
@@ -71,9 +70,10 @@ const Credential: React.FC<CredentialProps> = props => {
         })
       }>
       <Container>
-        <Container flexDirection={'row'}>
+        <Container>
           <Container
-            alignItems={'center'}
+            flexDirection={'row'}
+            justifyContent={'space-between'}
             padding
             backgroundColor={
               props.missing && props.spec && props.spec.essential
@@ -86,22 +86,41 @@ const Credential: React.FC<CredentialProps> = props => {
               borderRightWidth: StyleSheet.hairlineWidth,
               borderColor: Theme.colors.primary.accessories,
             }}>
+            <Container>
+              <Text type={Text.Types.H5} bold>
+                {props.verification.claim.RapidTestCredential.credentialSubject.Content.kit}
+              </Text>
+            </Container>
             {props.issuer ? (
-              <Container padding={3} backgroundColor={Theme.colors.primary.background} br={4}>
-                <Avatar size={40} source={props.issuer} />
+              <Container padding={3} backgroundColor={Theme.colors.primary.background}>
+                <Avatar size={30} source={props.issuer} />
               </Container>
             ) : (
               <Container padding={3} w={40} />
             )}
           </Container>
           <Container flex={1}>
-            <Container paddingLeft paddingTop paddingBottom paddingRight>
-              <Container paddingBottom={5}>
-                <Text type={Text.Types.H4} bold>
-                  {capitalizeFirstLetter(props.claimType)}
+            <Container paddingLeft paddingTop={0} paddingBottom paddingRight>
+              <Container paddingBottom={5} alignItems={'center'}>
+                <Text type={Text.Types.H4} bold textStyle={{color: '#20b787', fontSize: 18}}>
+                  {capitalizeAllLetter(props.verification.claim.RapidTestCredential.credentialSubject.Content.result)}
                 </Text>
               </Container>
-              {!props.missing && <Text type={Text.Types.SubTitle}>{props.issuer && props.issuer.name}</Text>}
+              <Container
+                flexDirection={'row'}
+                justifyContent={'space-between'}
+                paddingTop={15}
+              >
+                <Container>
+                  <Text type={Text.Types.SubTitle} textColor='#587b81' >Purchased:</Text>
+                  <Text type={Text.Types.SubTitle} textColor='#587b81' >{props.verification.claim.RapidTestCredential.credentialSubject.Content.purchased}</Text>
+                </Container>
+                <Container>
+                  <Text type={Text.Types.SubTitle} textColor='#587b81'>Submitted: </Text>
+                  <Text type={Text.Types.SubTitle} textColor='#587b81'>{props.verification.claim.RapidTestCredential.credentialSubject.Content.submitted}</Text>
+                </Container>
+              </Container>
+              {/*{!props.missing && <Text type={Text.Types.SubTitle}>{props.issuer && props.issuer.name}</Text>}*/}
               {props.missing && (!props.spec || !props.spec.essential) && (
                 <Text type={Text.Types.SubTitle}>Missing credential</Text>
               )}
@@ -116,33 +135,33 @@ const Credential: React.FC<CredentialProps> = props => {
                 </Container>
               )}
             </Container>
-            {props.spec && props.spec.iss && (
-              <Container paddingTop>
-                <Container paddingLeft paddingBottom={8}>
-                  <Text type={Text.Types.SubTitle}>Apply for credential</Text>
-                </Container>
-                {props.spec.iss
-                  .filter((iss: any) => iss.url)
-                  .map((iss: any) => {
-                    return (
-                      <TouchableHighlight
-                        key={iss.did}
-                        onPress={() => Linking.openURL(iss.url)}
-                        underlayColor={Theme.colors.primary.underlay}>
-                        <Container
-                          flexDirection={'row'}
-                          paddingLeft
-                          dividerTop
-                          justifyContent={'space-between'}
-                          padding>
-                          <Text>{Domain(iss.url)}</Text>
-                          <Icon name={'link'} color={Theme.colors.primary.accessories} size={18} />
-                        </Container>
-                      </TouchableHighlight>
-                    )
-                  })}
-              </Container>
-            )}
+            {/*{props.spec && props.spec.iss && (*/}
+            {/*  <Container paddingTop={0}>*/}
+            {/*    <Container paddingLeft paddingBottom={8}>*/}
+            {/*      <Text type={Text.Types.SubTitle} textColor={'red'}>Apply for credential</Text>*/}
+            {/*    </Container>*/}
+            {/*    {props.spec.iss*/}
+            {/*      .filter((iss: any) => iss.url)*/}
+            {/*      .map((iss: any) => {*/}
+            {/*        return (*/}
+            {/*          <TouchableHighlight*/}
+            {/*            key={iss.did}*/}
+            {/*            onPress={() => Linking.openURL(iss.url)}*/}
+            {/*            underlayColor={Theme.colors.primary.underlay}>*/}
+            {/*            <Container*/}
+            {/*              flexDirection={'row'}*/}
+            {/*              paddingLeft*/}
+            {/*              dividerTop*/}
+            {/*              justifyContent={'space-between'}*/}
+            {/*              padding>*/}
+            {/*              <Text>{Domain(iss.url)}</Text>*/}
+            {/*              <Icon name={'link'} color={Theme.colors.primary.accessories} size={18} />*/}
+            {/*            </Container>*/}
+            {/*          </TouchableHighlight>*/}
+            {/*        )*/}
+            {/*      })}*/}
+            {/*  </Container>*/}
+            {/*)}*/}
           </Container>
         </Container>
       </Container>

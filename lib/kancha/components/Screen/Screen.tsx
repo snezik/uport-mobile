@@ -18,7 +18,15 @@
  ***/
 
 import * as React from 'react'
-import { SafeAreaView, ScrollView, ViewStyle, ImageBackground, ImageSourcePropType, StatusBar } from 'react-native'
+import {
+  SafeAreaView,
+  ScrollView,
+  ViewStyle,
+  ImageBackground,
+  ImageSourcePropType,
+  StatusBar,
+  ImageResizeMode
+} from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { Container, Theme, Device, Text } from '@kancha'
 
@@ -71,6 +79,8 @@ interface ScreenProps {
    * Provide a background image type
    */
   backgroundImage?: ImageSourcePropType | undefined
+
+  resizeMode? : ImageResizeMode
 
   /**
    * Hide the statusbar
@@ -166,18 +176,12 @@ const Screen: React.FunctionComponent<ScreenProps> & {
     <ImageBackground
       style={{ flex: 1 }}
       source={props.backgroundImage ? props.backgroundImage : {}}
-      resizeMode={'cover'}>
+      resizeMode={props.resizeMode ? props.resizeMode : 'cover'}>
       {safeAreaView}
     </ImageBackground>
   )
 
-  return props.backgroundImage
-    ? backgroundImageContent
-    : props.config === ScreenConfigs.NoScroll
-    ? mainContent
-    : props.config === ScreenConfigs.Scroll
-    ? scrollViewContent
-    : safeAreaView
+  return props.backgroundImage ? backgroundImageContent : props.config === ScreenConfigs.NoScroll ? mainContent : props.config === ScreenConfigs.Scroll ? scrollViewContent : safeAreaView
 }
 
 Screen.defaultProps = {

@@ -23,19 +23,24 @@ class Welcome extends React.Component<WelcomeProps> {
   render() {
     return (
       <Screen
-        backgroundImage={Images.backgrounds.purpleGradientWithPattern}
+        backgroundImage={Images.backgrounds.welcomeSmall}
+        resizeMode={'contain'}
         type={Screen.Types.Custom}
         config={Screen.Config.SafeNoScroll}
         statusBarHidden>
-        <Container flex={1}>
-          <Container flex={1} justifyContent={'space-around'} alignItems={'center'} paddingTop={50}>
-            <Image source={Images.branding.logoWhite} style={{ height: 100 }} resizeMode={'contain'} />
-            <Text type={Text.Types.H3} textColor={'white'} bold textAlign={'center'}>
-              Get started by creating a new identity.
-            </Text>
+        <Container flex={1} paddingLeft={10}>
+          <Container flex={1} justifyContent={'flex-start'} alignItems={'flex-start'} paddingTop={50}>
+            {/*<Image source={Images.branding.logoWhite} style={{ height: 100 }} resizeMode={'contain'} />*/}
+            <Text type={Text.Types.H1} textColor={'white'} bold textAlign={'left'} padding={10} paddingBottom={1} margin={0}>
+            Health Passport
+          </Text>
+          <Text type={Text.Types.H5} textColor={'white'} bold textAlign={'left'} padding={10}>
+            Mobilize human capital in a{'\n'}
+            time of crisis and beyond
+          </Text>
           </Container>
-          <Container flex={1} paddingTop alignItems={'center'}>
-            <Container w={300}>
+          <Container flex={1} paddingTop alignItems={'center'} marginTop={250}>
+            <Container w={200}>
               <Button
                 testID={TESTID.ONBOARDING_GET_STARTED}
                 bold
@@ -53,7 +58,7 @@ class Welcome extends React.Component<WelcomeProps> {
                     },
                   })
                 }
-                type={Button.Types.Custom}
+                type={Button.Types.Primary}
                 block={Button.Block.Filled}
               />
               <Button
@@ -77,7 +82,7 @@ class Welcome extends React.Component<WelcomeProps> {
                     },
                   })
                 }
-                type={Button.Types.Custom}
+                type={Button.Types.Primary}
                 block={Button.Block.Clear}
               />
             </Container>

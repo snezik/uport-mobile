@@ -18,7 +18,7 @@
   -->
 
 <resources>
-    <color name="uport_background">@color/purple</color>
+    <color name="uport_background">@color/white</color>
     <color name="colorPrimary">@color/white246</color>
     <color name="colorPrimaryDark">@color/pure_black</color>
     <color name="textColorPrimary">@color/grey74</color>
@@ -27,6 +27,7 @@
     <color name="pure_black">#000</color>
     <color name="white216">#d8d8d8</color>
     <color name="white226">#e2e2e2</color>
+    <color name="white">#ffffff</color>
     <color name="white246">#f6f7f8</color>
     <color name="red">#e74c3c</color>
     <color name="purple">#5C50CA</color>

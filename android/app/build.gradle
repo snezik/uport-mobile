@@ -4,6 +4,7 @@ buildscript {
         maven {
             url "http://dl.bintray.com/kunickiaj/maven"
         }
+        google()
     }
 
     dependencies {
