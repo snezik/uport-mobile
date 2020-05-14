@@ -18,6 +18,7 @@ interface CredentialProps {
   verification?: any
   issuer?: any
   spec?: any
+  openModal?: any
   noMargin?: boolean
 }
 
@@ -60,6 +61,7 @@ const Credential: React.FC<CredentialProps> = props => {
       style={style}
       disabled={props.missing}
       onPress={() =>
+        // props.openModal(props.verification)
         props.screen &&
         props.componentId &&
         Navigation.push(props.componentId, {

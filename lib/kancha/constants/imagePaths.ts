@@ -1,6 +1,7 @@
 export const Images = {
   icons: {
     loading: require('uPortMobile/assets/images/loading-circle.png'),
+    closeButton: require('uPortMobile/assets/images/close-button.png'),
   },
   profile: {
     avatar: require('uPortMobile/assets/images/default_profile_image.png'),
@@ -25,4 +26,7 @@ export const Images = {
     apps: require('uPortMobile/assets/images/onboarding-apps.png'),
     tick: require('uPortMobile/assets/images/success-circle-tick.png'),
   },
+  logo: {
+    sanquin: require('uPortMobile/assets/images/sanquin-logo.png')
+  }
 }
