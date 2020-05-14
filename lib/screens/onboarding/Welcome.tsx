@@ -29,12 +29,12 @@ class Welcome extends React.Component<WelcomeProps> {
         config={Screen.Config.SafeNoScroll}
         statusBarHidden>
         <Container flex={1} paddingLeft={10}>
-          <Container flex={1} justifyContent={'flex-start'} alignItems={'flex-start'} paddingTop={50}>
+          <Container flex={1} justifyContent={'center'} alignItems={'center'} paddingTop={20}>
             {/*<Image source={Images.branding.logoWhite} style={{ height: 100 }} resizeMode={'contain'} />*/}
-            <Text type={Text.Types.H1} textColor={'white'} bold textAlign={'left'} padding={10} paddingBottom={1} margin={0}>
+            <Text type={Text.Types.H1} textColor={'#072a3d'} bold textAlign={'center'} padding={10} paddingBottom={1} margin={0}>
             Health Passport
           </Text>
-          <Text type={Text.Types.H5} textColor={'white'} bold textAlign={'left'} padding={10}>
+          <Text type={Text.Types.H5} textColor={'#072a3d'} bold textAlign={'center'} padding={10}>
             Mobilize human capital in a{'\n'}
             time of crisis and beyond
           </Text>
