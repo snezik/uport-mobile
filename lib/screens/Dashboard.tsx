@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Linking, Alert, Modal, StyleSheet, TouchableHighlight, View, Image } from 'react-native';
 import { connect } from 'react-redux'
-import { Screen, Container,
+import {
+  Screen, Container,
   Text,
   Card,
   Credential,
@@ -18,7 +19,7 @@ import { CustomPassportCredential } from "uPortMobile/lib/components/Custom/Cust
 import SCREENS from './Screens'
 import { track } from 'uPortMobile/lib/actions/metricActions'
 import { parseClaimItem } from 'uPortMobile/lib/utilities/parseClaims'
-
+import moment from 'moment'
 import { onlyLatestAttestationsWithIssuer } from 'uPortMobile/lib/selectors/attestations'
 import { capitalizeAllLetter } from "uPortMobile/lib/utilities/string";
 // import TESTID from "uPortMobile/lib/e2e/testIDs";
@@ -48,7 +49,7 @@ export const Dashboard: React.FC<DashboardProps> = props => {
     signPosts.length > 0 &&
     props.credentials.length === 0 &&
     signPosts.map((card: SignPostCardType) => {
-      return <SignPost key={card.id} card={card} onPress={() => props.openURL(card.url, card.id)}/>
+      return <SignPost key={card.id} card={card} onPress={() => props.openURL(card.url, card.id)} />
     })
 
   useEffect(() => {
@@ -72,17 +73,17 @@ export const Dashboard: React.FC<DashboardProps> = props => {
   // const immunePassportClaimContent = immunePassportClaim.claim['Immune Passport'].credentialSubject.Content;
   // console.log('!!!!!!!!!!!!!!!!!!!', isTestButtonShow, immunePassportClaimContent);
 
-  const immunePassportArray = props.credentials.filter((credential)=> {
-    if(credential.type === 'Immune Passport')
+  const immunePassportArray = props.credentials.filter((credential) => {
+    if (credential.type === 'Immune Passport')
       return credential;
   });
 
-  const otherCredentialsArray = props.credentials.filter((credential)=> {
-    if(credential.type !== 'Immune Passport')
+  const otherCredentialsArray = props.credentials.filter((credential) => {
+    if (credential.type !== 'Immune Passport')
       return credential;
   });
 
-  const openModal = (credential: any)=> {
+  const openModal = (credential: any) => {
     setModalVisible(true);
     setModalData(credential);
   };
@@ -103,8 +104,8 @@ export const Dashboard: React.FC<DashboardProps> = props => {
       </Container>
     )
   });
-  const showImmunePassportCredential = (firstCredential :any)=> {
-    console.log('firstCredential',firstCredential);
+  const showImmunePassportCredential = (firstCredential: any) => {
+    console.log('firstCredential', firstCredential);
     const immunePassportClaimContent = firstCredential.claim['Immune Passport'].credentialSubject.Content;
     return (
       <CustomPassportCredential immunePassportClaimContent={immunePassportClaimContent} />
@@ -117,75 +118,120 @@ export const Dashboard: React.FC<DashboardProps> = props => {
       config={Screen.Config.Scroll}
     >
       <Container padding marginTop={0}>
-        {immunePassportArray.length > 0 ?  showImmunePassportCredential(immunePassportArray[0]): null}
+        {immunePassportArray.length > 0 ? showImmunePassportCredential(immunePassportArray[0]) : null}
         {immunePassportArray.length > 0 ?
           <Button
             style={{ backgroundColor: '#20b787' }}
             textStyle={{ color: '#ffffff' }}
             fullWidth
             onPress={() => props.openURL('https://lab.palada.tech/#/welcome', '12')}
-            // type={Button.Types.Custom}
-            // block={Button.Block.Filled}
+          // type={Button.Types.Custom}
+          // block={Button.Block.Filled}
           >{'Add Sample Kit'}</Button>
           : null}
         {showSignPosts}
         {showCredentials}
       </Container>
-      { modalVisible &&
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
-        <View style={styles.rootView}>
-          <View style={styles.modalView}>
-            <Container
-              flexDirection={'column'}
-              alignItems={'center'}
-            >
-              <Image source={Images.logo.sanquin} style={{ height: 38, width: 158 }}/>
-            </Container>
-            <Container
-              flexDirection={'column'}
-              alignItems={'flex-start'}
-              paddingTop={20}
-            >
-              <Text textStyle={{fontSize: 12, fontWeight: '400'}} >{modalData.claim.RapidTestCredential.credentialSubject.Content.kit}</Text>
-              <Text type={Text.Types.H4} bold textStyle={{color: '#20b787', fontSize: 18}}>
-                {capitalizeAllLetter(modalData.claim.RapidTestCredential.credentialSubject.Content.result)}
-              </Text>
-            </Container>
-            <Container>
+      {modalVisible &&
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.rootView}>
+            <View style={styles.modalView}>
               <Container
-                flexDirection={'row'}
-                alignItems={'flex-start'}>
-                <Text textStyle={{fontSize: 14, fontWeight: 'bold'}} >&#10003;</Text>
-                <Text textStyle={{fontSize: 14, fontWeight: 'bold'}} >Purchased:</Text>
-                <Text textStyle={{fontSize: 14, fontWeight: 'bold'}} >{modalData.claim.RapidTestCredential.credentialSubject.Content.purchased}</Text>
+                flexDirection={'column'}
+                alignItems={'center'}
+              >
+                <Image source={Images.logo.sanquin} style={{ height: 38, width: 158 }} />
               </Container>
               <Container
-                flexDirection={'row'}
-                alignItems={'flex-start'}>
-                <Text textStyle={{fontSize: 14, fontWeight: 'bold'}} >&#10003;</Text>
-                <Text textStyle={{fontSize: 14, fontWeight: 'bold'}} >Submitted:</Text>
-                <Text textStyle={{fontSize: 14, fontWeight: 'bold'}} >{modalData.claim.RapidTestCredential.credentialSubject.Content.submitted}</Text>
+                flexDirection={'column'}
+                alignItems={'flex-start'}
+                paddingTop={20}
+              >
+                <Text textStyle={{ fontSize: 12, fontWeight: '400' }} >{modalData.claim.RapidTestCredential.credentialSubject.Content.kit}</Text>
+                <Text type={Text.Types.H4} bold textStyle={{ color: '#20b787', fontSize: 18 }}>
+                  {capitalizeAllLetter(modalData.claim.RapidTestCredential.credentialSubject.Content.result)}
+                </Text>
               </Container>
-            </Container>
+              <Container>
+                <Container
+                  flexDirection={'row'}
+                  alignItems={'flex-start'}
+                  marginTop={20}
+                  justifyContent="space-between"
+                  paddingRight={100}
+                  >
+                  {/* <Text textStyle={{ fontSize: 14, fontWeight: 'bold' }} ></Text> */}
+                  <Text textStyle={{ fontSize: 14, fontWeight: '700'  }} >&#10003;    Purchased:</Text>
+                  <Text textStyle={{ fontSize: 14, fontWeight: '300'  }} >{modalData.claim.RapidTestCredential.credentialSubject.Content.purchased}</Text>
+                </Container>
+                <Container
+                  flexDirection={'row'}
+                  alignItems={'flex-start'}
+                  marginTop={21}
+                  justifyContent="space-between"
+                  paddingRight={100}>
+                  {/* <Text textStyle={{ fontSize: 14, fontWeight: 'bold' }} ></Text> */}
+                  <Text textStyle={{ fontSize: 14, fontWeight: '700' }} >&#10003;   Test submitted:</Text>
+                  <Text textStyle={{ fontSize: 14, fontWeight: '300' }} >{modalData.claim.RapidTestCredential.credentialSubject.Content.submitted}</Text>
+                </Container>
+                <Container
+                  flexDirection={'row'}
+                  alignItems={'flex-start'}
+                  marginTop={21}
+                  justifyContent="space-between"
+                  paddingRight={100}>
+                  {/* <Text textStyle={{ fontSize: 14, fontWeight: '700' }} ></Text> */}
+                  <Text textStyle={{ fontSize: 14, fontWeight: '700' }} >&#10003;   Test verified:</Text>
+                  <Text textStyle={{ fontSize: 14, fontWeight: '300' }} >{modalData.claim.RapidTestCredential.credentialSubject.Content.verified}</Text>
+                </Container>
 
-            <TouchableHighlight
-              style={{ ...styles.openButton }}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Image source={Images.icons.closeButton} style={{height: 35, width: 35 }}/>
-            </TouchableHighlight>
+              </Container>
+              <Container
+                flexDirection={'row'}
+                alignItems={'flex-start'}
+                justifyContent={'space-between'}
+                paddingRight={50}
+                marginTop={20}
+                dividerTop={true}
+                paddingTop={20}>
+                <Container
+                  alignItems={'flex-start'}>
+                  <Text textStyle={{ fontSize: 10, fontWeight: '700' }} >ANTIBODY IN BLOODSTREAM:</Text>
+                  <Text textStyle={{ fontSize: 14, fontWeight: '300' }} >{modalData.claim.RapidTestCredential.credentialSubject.Content.antibody}</Text>
+                </Container>
+                <Container
+                  alignItems={'flex-start'}>
+                  <Text textStyle={{ fontSize: 10, fontWeight: '700', }} >BODY TEMPERATURE:</Text>
+                  <Text textStyle={{ fontSize: 14, fontWeight: '300' }} >{modalData.claim.RapidTestCredential.credentialSubject.Content.temperature}</Text>
+                </Container>
+              </Container>
+              <Container
+                flexDirection={'column'}
+                alignItems={'flex-start'}
+                marginTop={5}
+                >
+                  <Text textStyle={{ fontSize: 10, fontWeight: '700' }} >AUTHORITY VERIFIED RESULTS</Text>
+                  <Text textStyle={{ fontSize: 14, fontWeight: '300' }} >{modalData.issuer.name + " " + moment(modalData.claim.RapidTestCredential.issuanceDate * 1000).format("DD.MM.YYYY")}</Text>
+   
+              </Container>
+              <TouchableHighlight
+                style={{ ...styles.openButton }}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Image source={Images.icons.closeButton} style={{ height: 35, width: 35 }} />
+              </TouchableHighlight>
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
       }
     </Screen>
   )
@@ -193,19 +239,20 @@ export const Dashboard: React.FC<DashboardProps> = props => {
 
 const styles = StyleSheet.create({
   rootView: {
-    height:'100%',
+    height: '100%',
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   kit: {},
   modalView: {
-    height:'100%',
-    width:'100%',
+    height: '100%',
+    width: '100%',
     marginTop: 150,
     backgroundColor: 'white',
     borderRadius: 0,
     paddingTop: 45,
-    paddingLeft: 10,
+    paddingLeft: 30,
     paddingRight: 10,
+    color:'#072a3d',
     // alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -218,7 +265,7 @@ const styles = StyleSheet.create({
   },
   openButton: {
     position: 'absolute',
-    top : 10,
+    top: 10,
     right: 10
   },
   textStyle: {

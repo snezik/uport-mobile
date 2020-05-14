@@ -61,15 +61,15 @@ const Credential: React.FC<CredentialProps> = props => {
       style={style}
       disabled={props.missing}
       onPress={() =>
-        // props.openModal(props.verification)
-        props.screen &&
-        props.componentId &&
-        Navigation.push(props.componentId, {
-          component: {
-            name: props.screen,
-            passProps: { verification: props.verification, claimType: props.claimType },
-          },
-        })
+        props.openModal(props.verification)
+        // props.screen &&
+        // props.componentId &&
+        // Navigation.push(props.componentId, {
+        //   component: {
+        //     name: props.screen,
+        //     passProps: { verification: props.verification, claimType: props.claimType },
+        //   },
+        // })
       }>
       <Container>
         <Container>
