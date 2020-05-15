@@ -22,11 +22,14 @@ import { parseClaimItem } from 'uPortMobile/lib/utilities/parseClaims'
 import moment from 'moment'
 import { onlyLatestAttestationsWithIssuer } from 'uPortMobile/lib/selectors/attestations'
 import { capitalizeAllLetter } from "uPortMobile/lib/utilities/string";
+import { sha3_256 } from 'js-sha3'
+import { removeAttestation } from 'uPortMobile/lib/actions/uportActions'
 // import TESTID from "uPortMobile/lib/e2e/testIDs";
 // import { Navigation } from "uPortMobile/node_modules/react-native-navigation";
 
 interface DashboardProps {
   credentials: any[]
+  removeAttestation :(token: string, address: string) => void
   componentId: string
   openURL: (url: string, eventName: string) => void
 }
@@ -82,6 +85,10 @@ export const Dashboard: React.FC<DashboardProps> = props => {
     if (credential.type !== 'Immune Passport')
       return credential;
   });
+  const deleteVerification = function (token :string,address:string) {
+    const tokenHash = sha3_256(token);
+    props.removeAttestation(address, tokenHash);
+  }
 
   const openModal = (credential: any) => {
     setModalVisible(true);
@@ -137,9 +144,6 @@ export const Dashboard: React.FC<DashboardProps> = props => {
           animationType="slide"
           transparent={true}
           visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
         >
           <View style={styles.rootView}>
             <View style={styles.modalView}>
@@ -229,6 +233,17 @@ export const Dashboard: React.FC<DashboardProps> = props => {
               >
                 <Image source={Images.icons.closeButton} style={{ height: 35, width: 35 }} />
               </TouchableHighlight>
+              <TouchableHighlight
+                style={{ ...styles.deleteButton }}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                  deleteVerification(modalData.token,modalData.sub)
+                }}
+              >
+                <View style={{padding: 8, alignSelf: 'flex-start'}}>
+                   <Image source={Images.icons.deleteButton} style={{ height: 20, width: 20 ,alignSelf:"stretch"}} />
+                </View>
+              </TouchableHighlight>
             </View>
           </View>
         </Modal>
@@ -268,6 +283,11 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10
   },
+  deleteButton:{
+    position: 'absolute',
+    top: 10,
+    left: 10
+  },
   textStyle: {
     color: "white",
     fontWeight: "bold",
@@ -279,6 +299,10 @@ const styles = StyleSheet.create({
   }
 });
 
+
+
+
+
 const mapStateToProps = (state: any) => {
   return {
     credentials: onlyLatestAttestationsWithIssuer(state),
@@ -286,6 +310,7 @@ const mapStateToProps = (state: any) => {
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
+  removeAttestation: (address:string, token:string) => dispatch(removeAttestation(address, token)),
   openURL: (url: string, eventName: string) => {
     dispatch(track(`Opened linked ${eventName}`))
     Linking.openURL(url)
@@ -293,3 +318,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+

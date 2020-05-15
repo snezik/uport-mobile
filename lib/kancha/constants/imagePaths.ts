@@ -2,6 +2,7 @@ export const Images = {
   icons: {
     loading: require('uPortMobile/assets/images/loading-circle.png'),
     closeButton: require('uPortMobile/assets/images/close-button.png'),
+    deleteButton: require('uPortMobile/assets/images/trash.png'),
   },
   profile: {
     avatar: require('uPortMobile/assets/images/default_profile_image.png'),
