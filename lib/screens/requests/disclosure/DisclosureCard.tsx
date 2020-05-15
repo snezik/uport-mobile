@@ -97,7 +97,7 @@ export const DisclosureCard: React.FC<DisclosureRequestModelType> = requestModel
     // }
     >
       {requestModel && (
-        <Container paddingTop={80} >
+        <Container paddingLeft paddingRight paddingTop={80} >
 
          
           <DisclosureBanner
