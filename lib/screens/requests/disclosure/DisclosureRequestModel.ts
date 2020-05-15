@@ -162,10 +162,10 @@ const DisclosureRequestModel = (props: any): DisclosureRequestModelType | null =
    */
   if (props.actType === 'none' || props.accountAuthorized === true) {
     return {
-      title: 'Share to login',
+      title: 'Permission for notifications',
       description: null,
       actionButton: {
-        text: 'Login',
+        text: 'Allow notification',
         action: props.authorizeRequest,
         disabled: props.missingRequired,
         actionType: 'none',

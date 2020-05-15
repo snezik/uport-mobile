@@ -50,11 +50,11 @@ describe('Disclosure Request Model', () => {
       title: 'Share to login',
       description: null,
       actionButton: {
-        text: 'Login',
+        text: 'Allow Notifications',
       },
-      cancelButton: {
-        text: 'Cancel',
-      },
+      // cancelButton: {
+      //   text: 'Cancel',
+      // },
     }
 
     const requestModel = disclosureRequestModel(props)

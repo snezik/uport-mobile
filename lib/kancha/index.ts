@@ -44,5 +44,7 @@ export { default as Survey } from './components/Survey/Survey'
 
 export { default as Request } from './components/Request/Request'
 export { default as Banner } from './components/Banner/Banner'
+export { default as CredentialBanner } from './components/CredentialBanner/CredentialBanner'
+
 export { default as RequestContent } from './components/RequestContent/RequestContent'
 export { default as IndicatorBar } from './components/IndicatorBar/IndicatorBar'

@@ -17,8 +17,8 @@
 //
 import * as React from 'react'
 import { connect } from 'react-redux'
-
-import { Container, CredentialExplorer, Screen, Banner, Card, Text, Section, Theme, Button } from '@kancha'
+import { TouchableWithoutFeedback } from 'react-native';
+import { Container, CredentialExplorer, Screen, Banner, Card, Text, Section, Theme, Button, Images, CredentialBanner } from '@kancha'
 
 interface AcceptCredentialProps {
   verification: any
@@ -35,50 +35,71 @@ export const AcceptCredential: React.FC<AcceptCredentialProps> = props => {
   return (
     <Screen
       statusBarHidden
+      type="custom"
+      backgroundImage={Images.backgrounds.credential}
       config={Screen.Config.Scroll}
-      footerNavComponent={
-        <Container backgroundColor={Theme.colors.primary.background}>
-          <Container paddingHorizontal>
-            <Text textAlign={'center'} type={Text.Types.SectionHeader}>
-              {'You have received a credential'}
-            </Text>
-          </Container>
-          <Container flexDirection={'row'} padding>
-            <Container flex={1} paddingRight>
-              <Button
-                depth={1}
-                buttonText={'Decline'}
-                block={Button.Block.Clear}
-                type={Button.Types.Warning}
-                onPress={() => props.cancelRequest(props.request)}
-              />
-            </Container>
-            <Container flex={2}>
-              <Button
-                buttonText={'Accept'}
-                block={Button.Block.Filled}
-                type={Button.Types.Primary}
-                onPress={() => props.authorizeRequest(props.request, props.verification.iss)}
-              />
-            </Container>
-          </Container>
-        </Container>
-      }>
-      <Container paddingLeft paddingRight paddingTop={80}>
+
+    // footerNavComponent={
+    //   <Container>
+    //     {/* <Container paddingHorizontal>
+    //       <Text textAlign={'center'} type={Text.Types.SectionHeader}>
+    //         {'You have received a credential'}
+    //       </Text>
+    //     </Container> */}
+    //     {/* <Container flexDirection={'row'} padding>
+    //       {<Container flex={1} paddingRight>
+    //         <Button
+    //           depth={1}
+    //           buttonText={'Decline'}
+    //           block={Button.Block.Clear}
+    //           type={Button.Types.Warning}
+    //           onPress={() => props.cancelRequest(props.request)}
+    //         />
+    //       </Container> } */}
+    //       {/* <Container flexDirection={'row'} padding alignItems="center">
+    //         <Button
+    //           buttonText={'Accept'}
+    //           type={Button.Types.Confirm}
+    //           onPress={() => props.authorizeRequest(props.request, props.verification.iss)}
+    //         />
+    //       </Container> */}
+    //     {/* </Container> */}
+    //   </Container>
+    // }
+    >
+      {/* <TouchableWithoutFeedback onPress={() => props.authorizeRequest(props.request, props.verification.iss)}> */}
+      <Container paddingLeft paddingRight paddingTop={80}  >
+
         <Card>
-          <Banner
+          <CredentialBanner
             size="small"
-            requestor={props.title}
-            subTitle={`Issued by ` + props.issuer.name}
+            requestor={props.verification.claim.RapidTestCredential !== undefined ? props.verification.claim.RapidTestCredential.credentialSubject.Content.result : "Identity Verification"}
+            subTitle={`Notification from lab`}
             avatar={props.issuer.avatar && props.issuer.avatar}
             httpsResolveStatus={'OKAY'}
-            backgroundImage={props.issuer.bannerImage && props.issuer.bannerImage}
+            backgroundImage={Images.backgrounds.credential}
+            backgroundColor={'#072a3d'}
+          // {props.issuer.bannerImage && props.issuer.bannerImage}
           />
-          <Section noTopBorder noTopMargin>
+          {/* <Section noTopBorder noTopMargin>
             <CredentialExplorer claim={props.verification.claim} />
-          </Section>
+          </Section> */}
         </Card>
+
+        <Container flexDirection={'row'} marginTop={150} > 
+        <Container flex={1}>
+            <Button
+            fullWidth={true}
+            buttonText={'Accept'}
+            type={Button.Types.Confirm}
+            block={Button.Block.Filled}
+            onPress={() => props.authorizeRequest(props.request, props.verification.iss)}
+          />
+        </Container>
+        </Container>
       </Container>
+      {/* </TouchableWithoutFeedback> */}
+
     </Screen>
   )
 }
