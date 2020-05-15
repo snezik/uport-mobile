@@ -144,6 +144,7 @@ export const Dashboard: React.FC<DashboardProps> = props => {
           animationType="slide"
           transparent={true}
           visible={modalVisible}
+          onRequestClose={() => { setModalVisible(!modalVisible);}}
         >
           <View style={styles.rootView}>
             <View style={styles.modalView}>
@@ -169,7 +170,7 @@ export const Dashboard: React.FC<DashboardProps> = props => {
                   alignItems={'flex-start'}
                   marginTop={20}
                   justifyContent="space-between"
-                  paddingRight={100}
+                  paddingRight={70}
                   >
                   {/* <Text textStyle={{ fontSize: 14, fontWeight: 'bold' }} ></Text> */}
                   <Text textStyle={{ fontSize: 14, fontWeight: '700'  }} >&#10003;    Purchased:</Text>
@@ -180,7 +181,7 @@ export const Dashboard: React.FC<DashboardProps> = props => {
                   alignItems={'flex-start'}
                   marginTop={21}
                   justifyContent="space-between"
-                  paddingRight={100}>
+                  paddingRight={70}>
                   {/* <Text textStyle={{ fontSize: 14, fontWeight: 'bold' }} ></Text> */}
                   <Text textStyle={{ fontSize: 14, fontWeight: '700' }} >&#10003;   Test submitted:</Text>
                   <Text textStyle={{ fontSize: 14, fontWeight: '300' }} >{modalData.claim.RapidTestCredential.credentialSubject.Content.submitted}</Text>
@@ -190,7 +191,7 @@ export const Dashboard: React.FC<DashboardProps> = props => {
                   alignItems={'flex-start'}
                   marginTop={21}
                   justifyContent="space-between"
-                  paddingRight={100}>
+                  paddingRight={70}>
                   {/* <Text textStyle={{ fontSize: 14, fontWeight: '700' }} ></Text> */}
                   <Text textStyle={{ fontSize: 14, fontWeight: '700' }} >&#10003;   Test verified:</Text>
                   <Text textStyle={{ fontSize: 14, fontWeight: '300' }} >{modalData.claim.RapidTestCredential.credentialSubject.Content.verified}</Text>
