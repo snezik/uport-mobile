@@ -2,8 +2,6 @@ import * as React from 'react'
 import { ImageBackground, ViewStyle, Image } from 'react-native'
 import { Container, Text } from '@kancha'
 import { View } from 'react-native-animatable'
-import moment from 'moment'
-
 const Logo: React.FC<any> = props => {
   return (
     <Container backgroundColor={'#FFFFFF'} br={10} viewStyle={{ overflow: 'hidden' }}>
@@ -27,7 +25,8 @@ const bannerSize: { [index: string]: number } = {
   medium: 250,
 }
 
-const CredentialBanner: React.FC<BannerProps> = props => {
+
+const DisclosureBanner: React.FC<BannerProps> = props => {
   const BannerStyle: ViewStyle = {
     backgroundColor: '#333333',
     flex: 1,
@@ -42,42 +41,32 @@ const CredentialBanner: React.FC<BannerProps> = props => {
         paddingTop
         paddingLeft={20}
         >
-        <Container flexDirection="row" flex={1} >
+        <Container flexDirection="row"justifyContent='space-between' >
           <Container paddingTop={5}  flex={4}>
-            <Text type={Text.Types.SubTitle} textColor={'#FFFFFF'}>
-              {props.subTitle && props.subTitle}
-            </Text>
-            <Container marginTop={10} >
+  
+            <Container >
               <Text type={Text.Types.H3} textColor={'#20b787'}>
                 {props.requestor.toUpperCase() || 'No name provided'}
               </Text>
             </Container>
+            <Text type={Text.Types.H4} textColor={'#FFFFFF'}>
+              {/* {props.subTitle && props.subTitle} */}
+              Asks for permissions {"\n"}to send notifications 
+            </Text>
           </Container>
           <Container flex={2}>
               <View style={{ width: 70, height: 35 ,marginLeft:10} } >
                 <Logo image={props.avatar} />
               </View>
           </Container>
-        </Container>
-        <Container flexDirection="row" flex={1} marginTop={10} >
-          <Container paddingTop={2} >
-            <Text type={Text.Types.SubTitle} textColor={'#FFFFFF'}>
-              Verified
-            </Text>
-            <Container paddingTop={5} >
-              <Text textStyle={{ fontSize: 14, fontWeight: '400' }}  textColor={'#FFFFFF'}  >
-               {moment(Date.now()).format("DD.MM.YYYY")}
-              </Text>
-            </Container>
-          </Container>
+      
         </Container>
       </Container>
     </ImageBackground>
   )
 }
-
-
-CredentialBanner.defaultProps = {
+DisclosureBanner.defaultProps = {
   size: 'medium',
 }
-export default CredentialBanner
+
+export default DisclosureBanner

@@ -68,7 +68,7 @@ export const AcceptCredential: React.FC<AcceptCredentialProps> = props => {
     // }
     >
       {/* <TouchableWithoutFeedback onPress={() => props.authorizeRequest(props.request, props.verification.iss)}> */}
-      <Container paddingLeft paddingRight paddingTop={80}  >
+      <Container paddingLeft paddingRight paddingTop={80} >
 
         <Card>
           <CredentialBanner
@@ -86,16 +86,16 @@ export const AcceptCredential: React.FC<AcceptCredentialProps> = props => {
           </Section> */}
         </Card>
 
-        <Container flexDirection={'row'} marginTop={150} > 
-        <Container flex={1}>
+        <Container flexDirection={'row'} marginTop={150} >
+          <Container flex={1}>
             <Button
-            fullWidth={true}
-            buttonText={'Accept'}
-            type={Button.Types.Confirm}
-            block={Button.Block.Filled}
-            onPress={() => props.authorizeRequest(props.request, props.verification.iss)}
-          />
-        </Container>
+              fullWidth={true}
+              buttonText={'Accept'}
+              type={Button.Types.Confirm}
+              block={Button.Block.Filled}
+              onPress={() => props.authorizeRequest(props.request, props.verification.iss)}
+            />
+          </Container>
         </Container>
       </Container>
       {/* </TouchableWithoutFeedback> */}
